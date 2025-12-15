@@ -384,10 +384,15 @@ export function useCombat(playerStats, playerLoadout, enemyData, onCombatEnd) {
                 let toRefine = def.effects.refine;
                 for (let r = 0; r < toRefine; r++) {
                     const badIdx = eHand.findIndex(id => id === 'misstep');
-                    if (badIdx >= 0) eHand.splice(badIdx, 1);
-                    else {
+                    if (badIdx >= 0) {
+                        eHand.splice(badIdx, 1);
+                        addLog(`Enemy refined Misstep.`);
+                    } else {
                         const focusIdx = eHand.findIndex(id => id === 'focus');
-                        if (focusIdx >= 0) eHand.splice(focusIdx, 1);
+                        if (focusIdx >= 0) {
+                            eHand.splice(focusIdx, 1);
+                            addLog(`Enemy refined Focus.`);
+                        }
                     }
                 }
             }
@@ -421,9 +426,17 @@ export function useCombat(playerStats, playerLoadout, enemyData, onCombatEnd) {
                 const c = TECHNIQUES.find(t => t.id === id);
                 return Math.max(max, c?.cost || 0);
             }, 0) || 0;
-            const aiStrategy = maxLoadoutCost >= 6 ? 'RAMP' : 'AGGRO';
-            console.log('aiStrategy', aiStrategy);
 
+            const cardsAvailable = [...localDeck, ...eHand, ...ePlayed, ...localDiscard];
+            const avgResourceValue = cardsAvailable.reduce((sum, id) => {
+                const c = TECHNIQUES.find(t => t.id === id);
+                return sum + (c?.value || c?.effects?.spirit || 0);
+            }, 0) / (cardsAvailable.length || 1);
+            const aiStrategy = maxLoadoutCost > (avgResourceValue * 5) ? 'RAMP' : 'AGGRO';
+
+            console.log('AI Strategy:', aiStrategy);
+            console.log('Max Loadout Cost:', maxLoadoutCost);
+            console.log('Average Resource Value:', avgResourceValue * 5);
             // Only log on turn 1 (heuristically checking log length or turn count passed in state? 
             // We don't have turn count in this scope easily without prop drill or state read. 
             // 'turn' is state. Let's just log it if we buy.)
@@ -444,9 +457,14 @@ export function useCombat(playerStats, playerLoadout, enemyData, onCombatEnd) {
                     if (def.effects?.damage) return score + 10;
                 } else {
                     // AGGRO: Buy any damage available
-                    if (def.effects?.damage > 0) score += 30;
-                    if (def.type === CARD_TYPES.RESOURCE || def.effects?.spirit > 0) score += 15;
+                    if (def.effects?.damage > 0) score += 100;
+                    if (def.effects?.heal > 0) score += 20;
+                    if (def.effects?.defense > 0) score += 15;
+                    if (def.type === CARD_TYPES.RESOURCE || def.effects?.spirit > 0) score += 10;
                 }
+
+                // Some priority for adding actions
+                if (def.effects?.actions > 0) score += 25;
 
                 // Tie-breaker: offense utility
                 if (def.effects?.add_misstep > 0) score += 5;
@@ -508,8 +526,10 @@ export function useCombat(playerStats, playerLoadout, enemyData, onCombatEnd) {
         setPlayerStamina(newPH);
         addLog(`Resolution: You dealt ${netPlayerDmg}, took ${netEnemyDmg}.`);
 
-        if (newEH <= 0) { onCombatEnd(true, log); return; }
-        if (newPH <= 0) { onCombatEnd(false, log); return; }
+        if (newEH <= 0 || newPH <= 0) {
+            onCombatEnd(newPH < newEH, log);
+            return;
+        }
 
         setPhase(PHASES.CLEANUP);
     };
