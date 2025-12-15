@@ -27,7 +27,7 @@ export const generateChampion = (tier, factionId) => {
 
     // Loadout Logic
     let loadout = [];
-    const starters = TRUE_STARTERS;
+    const starters = TRUE_STARTERS.filter(t => t !== 'jab');
     const generals = getGenerals();
     const factionCards = factionId ? getFactionCards(factionId) : [];
 
@@ -37,6 +37,7 @@ export const generateChampion = (tier, factionId) => {
             nameTitle = "Novice";
             // 4 Starter + 1 General + 1 Faction
             loadout = [
+                'jab',
                 ...getRandom(starters, 4),
                 ...getRandom(generals, 2),
                 //...(factionId ? getRandom(factionCards, 1) : getRandom(starters, 1))
@@ -47,6 +48,7 @@ export const generateChampion = (tier, factionId) => {
             nameTitle = "Adept";
             // 2 Starter + 2 General + 2 Faction
             loadout = [
+                'jab',
                 ...getRandom(starters, 2),
                 ...getRandom(generals, 2),
                 ...(factionId ? getRandom(factionCards, 2) : getRandom(generals, 2)) // Fallback if no faction
@@ -57,6 +59,7 @@ export const generateChampion = (tier, factionId) => {
             nameTitle = "Master";
             // 3 General + 3 Faction
             loadout = [
+                'jab',
                 ...getRandom(generals, 3),
                 ...(factionId ? getRandom(factionCards, 3) : getRandom(generals, 3))
             ];
