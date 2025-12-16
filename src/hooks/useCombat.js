@@ -89,9 +89,9 @@ export function useCombat(playerStats, playerLoadout, enemyData, onCombatEnd) {
         // Supply Init
         const initSupply = (selectedIds) => {
             const s = {};
-            ['focus', 'momentum', 'mastery'].forEach(id => s[id] = 100); // Infinite resources
-            if (selectedIds && selectedIds.length > 0) selectedIds.forEach(id => s[id] = 10);
-            else['jab', 'block', 'center'].forEach(id => s[id] = 10);
+            ['focus', 'momentum', 'mastery'].forEach(id => s[id] = 20); // Infinite resources
+            if (selectedIds && selectedIds.length > 0) selectedIds.forEach(id => s[id] = 5);
+            else['jab', 'block', 'center'].forEach(id => s[id] = 5);
             return s;
         };
 
@@ -437,9 +437,6 @@ export function useCombat(playerStats, playerLoadout, enemyData, onCombatEnd) {
             console.log('AI Strategy:', aiStrategy);
             console.log('Max Loadout Cost:', maxLoadoutCost);
             console.log('Average Resource Value:', avgResourceValue * 5);
-            // Only log on turn 1 (heuristically checking log length or turn count passed in state? 
-            // We don't have turn count in this scope easily without prop drill or state read. 
-            // 'turn' is state. Let's just log it if we buy.)
 
             const getBuyScore = (def) => {
                 let score = def.cost || 0;
@@ -527,7 +524,7 @@ export function useCombat(playerStats, playerLoadout, enemyData, onCombatEnd) {
         addLog(`Resolution: You dealt ${netPlayerDmg}, took ${netEnemyDmg}.`);
 
         if (newEH <= 0 || newPH <= 0) {
-            onCombatEnd(newPH < newEH, log);
+            onCombatEnd(newPH > newEH, log);
             return;
         }
 
