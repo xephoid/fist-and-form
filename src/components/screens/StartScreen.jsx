@@ -6,6 +6,7 @@ export default function StartScreen({ onStart }) {
     const [name, setName] = useState('');
     const [species, setSpecies] = useState('Human');
     const [showRules, setShowRules] = useState(false);
+    const [showCampaign, setShowCampaign] = useState(false);
 
     const handleStart = () => {
         dispatch({ type: 'SET_PLAYER_NAME', payload: name });
@@ -22,10 +23,9 @@ export default function StartScreen({ onStart }) {
                     padding: '40px', overflowY: 'auto'
                 }}>
                     <div style={{ maxWidth: '600px', margin: '0 auto', background: '#222', padding: '20px', borderRadius: '8px', border: '1px solid #444' }}>
-                        <h2 style={{ color: 'gold', marginTop: 0 }}>Rules of Engagement</h2>
+                        <h2 style={{ color: 'gold', marginTop: 0 }}>Rules of Combat</h2>
                         <ul style={{ lineHeight: '1.6', color: '#ddd' }}>
                             <li><strong>Goal:</strong> Reduce opponent's Stamina to 0.</li>
-                            <li><strong>Difficulty:</strong> Adjusted based on species.</li>
                             <li><strong>Each turn has three phases:</strong></li>
                             <li><strong>Phase 1: Technique</strong> - Draw 5 cards, then play <span style={{ color: 'cyan' }}>technique</span> cards which have various effects. One card per turn, unless otherwise specified.</li>
                             <li><strong>Phase 2: Channel</strong> - Spend <span style={{ color: 'yellow' }}>spirit</span> (Focus, Momentum, Mastery) to buy new cards. You start with 1 Channel (Buy).</li>
@@ -40,7 +40,28 @@ export default function StartScreen({ onStart }) {
                 </div>
             )}
 
+            {showCampaign && (
+                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.9)', zIndex: 100, padding: '40px', overflowY: 'auto' }}>
+                    <div style={{ maxWidth: '600px', margin: '0 auto', background: '#222', padding: '20px', borderRadius: '8px', border: '1px solid #444' }}>
+                        <h2 style={{ color: 'gold', marginTop: 0 }}>Campaign Mode</h2>
+                        <ul style={{ lineHeight: '1.6', color: '#ddd' }}>
+                            <li><strong>Goal:</strong> Become the World Champion!</li>
+                            <li><strong>Difficulty:</strong> Adjusted based on species.</li>
+                            <li><strong>World:</strong> Explore the world and challenge opponents.</li>
+                            <li><strong>Combat:</strong> Pick opponents and challenge them in combat. <br /><a style={{ color: 'gold', cursor: 'pointer', textDecoration: 'underline' }} onClick={() => { setShowRules(true); setShowCampaign(false); }}>See Combat Rules</a></li>
+                            <li><strong>Learn Techniques:</strong> Gain new techniques by defeating opponents. Combine the best techniques to win!</li>
+                            <li><strong>Gain XP:</strong> Gain experience points by defeating opponents. Makes you stronger!</li>
+                            <li><strong>Defeat the Champions of each Faction to become the World Champion!</strong></li>
+                        </ul>
+                        <button onClick={() => setShowCampaign(false)} style={{ marginTop: '20px', width: '100%', padding: '10px' }}>Got it</button>
+                    </div>
+                </div>
+            )}
+
             <h1>Fractured Fist</h1>
+            <div>
+                <a href="./intro.html" style={{ color: 'gold' }}>Read about the world</a>
+            </div>
             <div style={{ margin: '20px 0', display: 'flex', flexDirection: 'column', gap: '10px', width: '300px' }}>
                 <label>
                     Name:
@@ -56,7 +77,10 @@ export default function StartScreen({ onStart }) {
                     </select>
                 </label>
                 <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
-                    <button onClick={() => setShowRules(true)} style={{ flex: 1, background: '#444' }}>How to Play</button>
+                    <button onClick={() => setShowCampaign(true)} style={{ flex: 1, background: '#444' }}>Campaign Instructions</button>
+                    <button onClick={() => setShowRules(true)} style={{ flex: 1, background: '#444' }}>Rules of Combat</button>
+                </div>
+                <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
                     <button onClick={handleStart} style={{ flex: 2, background: 'gold', color: 'black', fontWeight: 'bold' }}>Begin Journey</button>
                 </div>
             </div>
