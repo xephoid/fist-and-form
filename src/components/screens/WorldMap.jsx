@@ -23,7 +23,7 @@ export default function WorldMap({ onSelectLocation, onOpenCollection, onResetGa
                 </div>
             </header>
 
-            <div style={{ position: 'relative', width: '100%', height: '600px', background: 'url("/maps/map1.0.png") 0% 25% / cover', borderRadius: '8px', overflow: 'hidden' }}>
+            <div style={{ position: 'relative', width: '100%', height: '600px', background: 'url("maps/map1.0.png") 0% 25% / cover', borderRadius: '8px', overflow: 'hidden' }}>
                 {LOCATIONS.map(loc => {
                     // Check for locked status
                     let isLocked = false;
