@@ -446,9 +446,9 @@ export function useCombat(playerStats, playerLoadout, enemyData, onCombatEnd) {
             }, 0) / (cardsAvailable.length || 1);
             const aiStrategy = maxLoadoutCost > (avgResourceValue * 6) ? 'RAMP' : 'AGGRO';
 
-            console.log('AI Strategy:', aiStrategy);
-            console.log('Max Loadout Cost:', maxLoadoutCost);
-            console.log('Average Resource Value:', avgResourceValue * 6);
+            // console.log('AI Strategy:', aiStrategy);
+            // console.log('Max Loadout Cost:', maxLoadoutCost);
+            // console.log('Average Resource Value:', avgResourceValue * 6);
 
             const getBuyScore = (def) => {
                 let score = def.cost || 0;
@@ -493,7 +493,7 @@ export function useCombat(playerStats, playerLoadout, enemyData, onCombatEnd) {
             setEnemySupply(s => ({ ...s, [buyId]: s[buyId] - 1 }));
             // We track bought cards locally to ensure they are included in the immediate redraw
             boughtCards.push(buyId);
-            //addLog(`Enemy (${aiStrategy}) bought ${cardDef.name}`);
+            addLog(`Enemy (${aiStrategy}) bought ${cardDef.name}`);
         }
 
         // Set Computed Results for Resolution
@@ -535,7 +535,7 @@ export function useCombat(playerStats, playerLoadout, enemyData, onCombatEnd) {
 
         setEnemyStamina(newEH);
         setPlayerStamina(newPH);
-        addLog(`Resolution: You dealt ${netPlayerDmg}, took ${netEnemyDmg}.`);
+        addLog(`COMBAT: You dealt ${netPlayerDmg}, took ${netEnemyDmg}.`);
 
         if (newEH <= 0 || newPH <= 0) {
             onCombatEnd(newPH > newEH, log);
