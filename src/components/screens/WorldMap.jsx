@@ -12,7 +12,6 @@ export default function WorldMap({ onSelectLocation, onOpenCollection, onResetGa
         <div className="screen container">
             <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
                 <h1>World Map</h1>
-                <small>Click on a location to see who is available to challenge there.</small>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
                     <button onClick={onOpenCollection}>Manage Techniques</button>
                     <div>
@@ -22,7 +21,7 @@ export default function WorldMap({ onSelectLocation, onOpenCollection, onResetGa
                     </div>
                 </div>
             </header>
-
+            <small>Click on a location to see who is available to challenge there.</small>
             <div style={{ position: 'relative', width: '100%', height: '600px', background: 'url("maps/map1.0.png") 0% 25% / cover', borderRadius: '8px', overflow: 'hidden' }}>
                 {LOCATIONS.map(loc => {
                     // Check for locked status
@@ -84,7 +83,7 @@ export default function WorldMap({ onSelectLocation, onOpenCollection, onResetGa
                     const isLocked = l.type === 'HOME_BASE' && standing <= -4;
                     return null; // This block was not fully defined in the instruction, returning null to maintain original behavior.
                 })}
-                {Object.entries(state.world.factions).map(([id, data]) => {
+                {/* {Object.entries(state.world.factions).map(([id, data]) => {
                     const def = FACTIONS[id];
                     if (!def) return null;
                     return (
@@ -92,8 +91,9 @@ export default function WorldMap({ onSelectLocation, onOpenCollection, onResetGa
                             {def.name}: {data.standing}
                         </div>
                     )
-                })}
-                <div>
+                })} */}
+                <div style={{ display: 'flex', gap: '20px' }}>
+                    <a href="./intro.html" style={{ color: 'gold' }}>Introduction</a>
                     <button style={{ color: 'red', border: '1px solid red' }} onClick={onResetGame}>New Game</button>
                 </div>
             </div>
