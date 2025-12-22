@@ -68,22 +68,9 @@ export default function WorldMap({ onSelectLocation, onOpenCollection, onResetGa
             </div>
 
             <div style={{ marginTop: '20px', display: 'flex', gap: '20px', justifyContent: 'space-between' }}>
-                {Object.values(state.world.factions).map(f => ( // Fix: state.world.factions is object, map over values or keys
-                    // Wait, I stored it as object in Context.
-                    // Need to match keys.
-                    null
-                ))}
                 {/* Simple Faction Status */}
-                {state.world.locations && Object.values(state.world.locations).map((locState) => {
-                    const l = LOCATIONS.find(loc => loc.id === locState.id);
-                    if (!l) return null;
-
-                    // Lock Logic
-                    const standing = l.owner ? state.world.factions[l.owner]?.standing : 0;
-                    const isLocked = l.type === 'HOME_BASE' && standing <= -4;
-                    return null; // This block was not fully defined in the instruction, returning null to maintain original behavior.
-                })}
-                {/* {Object.entries(state.world.factions).map(([id, data]) => {
+                {state.player.won && <div>You win!</div>}
+                {!state.player.won && Object.entries(state.world.factions).map(([id, data]) => {
                     const def = FACTIONS[id];
                     if (!def) return null;
                     return (
@@ -91,7 +78,9 @@ export default function WorldMap({ onSelectLocation, onOpenCollection, onResetGa
                             {def.name}: {data.standing}
                         </div>
                     )
-                })} */}
+                })}
+            </div>
+            <div style={{ marginTop: '20px', display: 'flex', gap: '20px', justifyContent: 'space-between' }}>
                 <div style={{ display: 'flex', gap: '20px' }}>
                     <a href="./intro.html" style={{ color: 'gold' }}>Introduction</a>
                     <button style={{ color: 'red', border: '1px solid red' }} onClick={onResetGame}>New Game</button>
