@@ -39,7 +39,7 @@ const Card = ({ cardId, onClick, disabled, count, showCost, highlight }) => {
             <div style={{ fontWeight: 'bold', overflow: 'hidden' }}>{def.name}</div>
             <div style={{ fontSize: '8px', color: '#aaa' }}>{typeDisplay[def.type]}</div>
             {showCost && <div style={{ position: 'absolute', top: 2, right: 2, background: 'blue', padding: '1px 3px', borderRadius: '3px' }}>{def.cost}</div>}
-            <div style={{ marginTop: '4px', lineHeight: '1.1' }}>{def.description}</div>
+            <div style={{ marginTop: '4px', lineHeight: '1.1', whiteSpace: 'pre' }}>{def.description}</div>
             {count !== undefined && <div style={{ position: 'absolute', bottom: 2, right: 2, background: '#444', padding: '1px 3px' }}>x{count}</div>}
         </div>
     );
