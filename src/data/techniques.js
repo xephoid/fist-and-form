@@ -53,7 +53,7 @@ export const TECHNIQUES = [
     { id: 'deflecting_block', name: 'Deflecting Block', type: CARD_TYPES.TECHNIQUE, cost: 3, description: "+1 Tech,\r\n+1 Defense.", faction: null, effects: { actions: 1, defense: 1 } },
     { id: 'smoke_bomb', name: 'Smoke Bomb', type: CARD_TYPES.TECHNIQUE, cost: 3, description: "+2 Tech,\r\n+2 Missteps.", faction: null, effects: { actions: 2, add_misstep: 2 } },
     { id: 'combination_rush', name: 'Combination Rush', type: CARD_TYPES.TECHNIQUE, cost: 3, description: "+2 Tech,\r\n+1 Channel.", faction: null, effects: { actions: 2, channels: 1 } },
-    { id: 'thoughtful_composure', name: 'Thoughtful Composure', type: CARD_TYPES.TECHNIQUE, cost: 4, description: "+2 Tech,\r\n+1 Refine.", faction: null, effects: { spirit: 2, refine: 1 } },
+    { id: 'thoughtful_composure', name: 'Thoughtful Composure', type: CARD_TYPES.TECHNIQUE, cost: 4, description: "+2 Tech,\r\n+1 Refine.", faction: null, effects: { actions: 2, refine: 1 } },
     { id: 'mental_clarity', name: 'Mental Clarity', type: CARD_TYPES.TECHNIQUE, cost: 3, description: "+3 Draw.", faction: null, effects: { draw: 3 } },
     { id: 'flying_kick', name: 'Flying Kick', type: CARD_TYPES.TECHNIQUE, cost: 6, description: "+2 Damage.", faction: null, effects: { damage: 2 } },
 ];
